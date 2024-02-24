@@ -5,6 +5,7 @@ import { loadBlogPost } from "@/helpers/file-helpers";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
 import CodeSnippet from "@/components/CodeSnippet";
+import DivisionGroupsDemo from "@/components/DivisionGroupsDemo";
 
 import styles from "./postSlug.module.css";
 
@@ -31,6 +32,7 @@ async function BlogPost({ params }) {
           source={content}
           components={{
             pre: CodeSnippet,
+            DivisionGroupsDemo: DivisionGroupsDemo,
           }}
         />
       </div>
