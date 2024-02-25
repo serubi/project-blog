@@ -69,17 +69,19 @@ function DivisionGroupsDemo({
             ))}
           </div>
         </div>
+
+        {includeRemainderArea && (
+          <div className={styles.remainderArea}>
+            <p className={styles.remainderHeading}>Remainder Area</p>
+
+            {range(remainder).map((index) => {
+              const globalIndexReversed = numOfGroups * numOfItemsPerGroup - 1 + remainder - index;
+              const layoutId = `${id}-${globalIndexReversed}`;
+              return <motion.div layoutId={layoutId} key={layoutId} className={styles.item} />;
+            })}
+          </div>
+        )}
       </LayoutGroup>
-
-      {includeRemainderArea && (
-        <div className={styles.remainderArea}>
-          <p className={styles.remainderHeading}>Remainder Area</p>
-
-          {range(remainder).map((index) => {
-            return <div key={index} className={styles.item} />;
-          })}
-        </div>
-      )}
 
       <Equation
         dividend={numOfItems}
