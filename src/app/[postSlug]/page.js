@@ -7,9 +7,16 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
 
 import styles from "./postSlug.module.css";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
-  const { frontmatter } = await loadBlogPost(params.postSlug);
+  const blogPost = await loadBlogPost(params.postSlug);
+
+  if (!blogPost) {
+    return;
+  }
+
+  const { frontmatter } = blogPost;
 
   return {
     title: `${frontmatter.title} • ${BLOG_TITLE}`,
@@ -18,7 +25,13 @@ export async function generateMetadata({ params }) {
 }
 
 async function BlogPost({ params }) {
-  const { frontmatter, content } = await loadBlogPost(params.postSlug);
+  const blogPost = await loadBlogPost(params.postSlug);
+
+  if (!blogPost) {
+    notFound();
+  }
+
+  const { frontmatter, content } = blogPost;
 
   return (
     <article className={styles.wrapper}>
@@ -27,10 +40,7 @@ async function BlogPost({ params }) {
         publishedOn={new Date(frontmatter.publishedOn)}
       />
       <div className={styles.page}>
-        <MDXRemote
-          source={content}
-          components={COMPONENT_MAP}
-        />
+        <MDXRemote source={content} components={COMPONENT_MAP} />
       </div>
     </article>
   );
