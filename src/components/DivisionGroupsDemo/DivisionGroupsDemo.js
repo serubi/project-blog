@@ -75,7 +75,7 @@ function DivisionGroupsDemo({
             <p className={styles.remainderHeading}>Remainder Area</p>
 
             {range(remainder).map((index) => {
-              const globalIndexReversed = numOfGroups * numOfItemsPerGroup - 1 + remainder - index;
+              const globalIndexReversed = numOfItems - 1 - index;
               const layoutId = `${id}-${globalIndexReversed}`;
               return <motion.div layoutId={layoutId} key={layoutId} className={styles.item} />;
             })}
